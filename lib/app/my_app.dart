@@ -1,4 +1,5 @@
 
+import 'package:flutter_application_1/app/view/contact_form.dart';
 import 'package:flutter_application_1/app/view/contact_list.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const ContactList(),
+      routes: {
+        '/': (context) => const ContactList(),
+        'contact-form': (context) => ContactForm()
+      },
     );
   }
 }
