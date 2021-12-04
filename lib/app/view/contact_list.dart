@@ -31,7 +31,7 @@ class ContactList extends StatelessWidget {
               actions: [
                 IconButton(
                   onPressed: (){
-                    Navigator.of(context).pushNamed(MyApp.form);
+                    Navigator.of(context).pushNamed(MyApp.contact_form);
                   },
                   icon: const Icon(Icons.add),
                 ),

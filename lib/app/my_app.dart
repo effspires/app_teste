@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
 
   static const
   home = '/',
-  form = 'contact-form';
+  contact_form = 'contact-form';
 
 
   @override
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         home: (context) => const ContactList(),
-        form: (context) => const ContactForm(),
+        contact_form: (context) => const ContactForm(),
       },
     );
   }
