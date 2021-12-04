@@ -6,6 +6,11 @@ import 'package:flutter/material.dart';
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  static const
+  home = '/',
+  form = 'contact-form';
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,8 +19,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: {
-        '/': (context) => const ContactList(),
-        'contact-form': (context) => ContactForm()
+        home: (context) => const ContactList(),
+        form: (context) => const ContactForm(),
       },
     );
   }
