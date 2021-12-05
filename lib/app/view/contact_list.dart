@@ -1,80 +1,107 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app/database/sqlite/dao/contact_dao_impl.dart';
 import 'package:flutter_application_1/app/domain/entities/contact.dart';
-
-import '../my_app.dart';
+import 'package:flutter_application_1/app/view/contact_list_back.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class ContactList extends StatelessWidget {
-  const ContactList({ Key? key }) : super(key: key);
+  ContactList({Key? key}) : super(key: key);
 
-  /*final lista = [
-    {'nome':'Fábio', 'telefone':'(55) 9 9159-5147', 'avatar':'https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916__340.png'},
-    {'nome':'Adriane Tim', 'telefone':'(55) 9 8115-5129', 'avatar':'https://cdn.pixabay.com/photo/2014/03/24/17/19/teacher-295387__340.png'},
-    {'nome':'Adriane Claro', 'telefone':'(55) 9 9132-8971', 'avatar':'https://cdn.pixabay.com/photo/2014/03/24/17/19/teacher-295387__340.png'},
-  ];*/
+  final _back = ContactListBack();
 
-  Future<List<Contact>> _buscar() async{
-    return ContactDAOImpl().find();
+  CircleAvatar circleAvatar(String url){
+    return (Uri.tryParse(url)!.isAbsolute) ?
+      CircleAvatar(backgroundImage: NetworkImage(url)) :
+      const CircleAvatar(child: Icon(Icons.person));
   }
-  
+
+  Widget iconEditButton(Function editar){
+    return IconButton(
+      icon: const Icon(Icons.edit),
+      color: Colors.orange,
+      onPressed: () {
+        editar();
+      },
+    );
+  }
+
+  Widget iconRemoveButton(BuildContext context, Function remove) {
+    return IconButton(
+      icon: const Icon(Icons.delete),
+      color: Colors.red,
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Excluir'),
+            content: const Text('Confirma a exclusão?'),
+            actions: [
+              ElevatedButton(
+                onPressed: () => remove(),
+                child: const Text('Sim')
+              ),
+              ElevatedButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Não'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    return FutureBuilder(
-      future: _buscar(),
-      builder: (context, futuro){
-        if(futuro.hasData){
-          List<Contact> lista = futuro.data as List<Contact>;
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('Lista de Contatos'),
-              actions: [
-                IconButton(
-                  onPressed: (){
-                    Navigator.of(context).pushNamed(MyApp.contact_form);
-                  },
-                  icon: const Icon(Icons.add),
-                ),
-              ],
-            ),
-            body: ListView.builder(
-              itemCount: lista.length,
-              itemBuilder: (context, i){
-                var contato = lista[i];
-                var avatar = CircleAvatar(backgroundImage: NetworkImage(contato.urlAvatar.toString()),);
-
-                return ListTile(
-                  leading: avatar,
-                  title: Text(contato.nome.toString()),
-                  subtitle: Text(contato.telefone.toString()),
-                  trailing: SizedBox(
-                    width: 100,
-                    child: Row(
-                      children: [
-                        IconButton(
-                          onPressed: (){
-                          
-                          },
-                          icon: const Icon(Icons.edit),
-                        ),
-                        IconButton(
-                          onPressed: (){
-                          
-                          },
-                          icon: const Icon(Icons.delete),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Lista de Contatos'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                //Navigator.of(context).pushNamed(MyApp.contactform);
+                 _back.goToForm(context);
               },
+              icon: const Icon(Icons.add),
             ),
-          );
-        } else {
-          return const Scaffold();
-        }
-      }
-      
-    );
+          ],
+        ),
+        body: Observer(builder: (context) {
+          return FutureBuilder(
+              future: _back.list,
+              builder: (context, futuro) {
+                if (!futuro.hasData) {
+                  return const CircularProgressIndicator();
+                } else {
+                  List<Contact> lista = futuro.data as List<Contact>;
+                  return ListView.builder(
+                    itemCount: lista.length,
+                    itemBuilder: (context, i) {
+                      var contato = lista[i];
+
+                      return ListTile(
+                        leading: circleAvatar(contato.urlAvatar.toString()),
+                        title: Text(contato.nome.toString()),
+                        subtitle: Text(contato.telefone.toString()),
+                        trailing: SizedBox(
+                          width: 100,
+                          child: Row(
+                            children: [
+                              iconEditButton(
+                                () => _back.goToForm(context, contato),
+                              ),
+                              iconRemoveButton(context, () {
+                                _back.remove(int.parse(contato.id.toString()));
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }
+              });
+        }));
   }
 }

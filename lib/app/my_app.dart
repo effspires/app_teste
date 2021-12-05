@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
 
   static const
   home = '/',
-  contact_form = 'contact-form';
+  contactform = 'contact-form';
 
 
   @override
@@ -19,8 +19,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: {
-        home: (context) => const ContactList(),
-        contact_form: (context) => const ContactForm(),
+        home: (context) => ContactList(),
+        contactform: (context) => ContactForm(),
       },
     );
   }

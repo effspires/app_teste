@@ -5,7 +5,6 @@ import 'package:flutter_application_1/app/my_app.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
-
 part 'contact_list_back.g.dart';
 
 class ContactListBack = _ContactListBack with _$ContactListBack;
@@ -15,8 +14,8 @@ abstract class _ContactListBack with Store{
 
   //lista de contatos
   @observable
-  late Future<List<Contact>> list;
-
+  Future<List<Contact>>? list;
+  
   //método para atualizar a lista de contatos
   @action
   refreshList([dynamic value]){
@@ -29,7 +28,7 @@ abstract class _ContactListBack with Store{
 
   //método para chamar o form salvar/alterar
   goToForm(BuildContext context, [Contact? contact]) {
-    Navigator.of(context).pushNamed(MyApp.contact_form, arguments:contact).then(refreshList);
+    Navigator.of(context).pushNamed(MyApp.contactform, arguments: contact).then(refreshList);
   }
 
   //excluir
