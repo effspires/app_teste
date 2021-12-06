@@ -58,8 +58,7 @@ class ContactList extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {
-                //Navigator.of(context).pushNamed(MyApp.contactform);
-                 _back.goToForm(context);
+                _back.goToForm(context);
               },
               icon: const Icon(Icons.add),
             ),
@@ -81,6 +80,9 @@ class ContactList extends StatelessWidget {
                       return ListTile(
                         leading: circleAvatar(contato.urlAvatar.toString()),
                         title: Text(contato.nome.toString()),
+                        onTap: (){
+                          _back.goToDetails(context, contato);
+                        },
                         subtitle: Text(contato.telefone.toString()),
                         trailing: SizedBox(
                           width: 100,

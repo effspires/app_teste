@@ -2,13 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/app/domain/entities/contact.dart';
 import 'package:flutter_application_1/app/domain/services/contact_service.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mobx/mobx.dart';
 
-part'contact_form_back.g.dart';
-
-class ContactFormBack = _ContactFormBack with _$ContactFormBack;
-
-abstract class _ContactFormBack with Store {
+class ContactFormBack {
   
   Contact? contact;
   final _service = GetIt.I.get<ContactService>();
@@ -16,13 +11,12 @@ abstract class _ContactFormBack with Store {
   bool? _nameIsValid;
   bool? _emailIsValid;
   bool? _phoneIsValid;
-  //bool _urlIsValid;
 
   //@action
   bool get isValid => _nameIsValid! && _emailIsValid! && _phoneIsValid!;
 
   //Diferenciar novo com alteração
-  _ContactFormBack(BuildContext context){
+  ContactFormBack(BuildContext context){
     var parameter = ModalRoute.of(context)!.settings.arguments;
     contact = ((parameter == null) ? Contact() : parameter) as Contact?;
   }
