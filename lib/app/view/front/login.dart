@@ -5,11 +5,28 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
+  
+
   @override
   _LoginState createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
+
+  showModalError(BuildContext context){
+    const alert = AlertDialog(
+      title: Text('Alerta'),
+      content: Text('Não foi possível encontrar o APP compatível!'),
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return alert;
+      }
+    );
+  }
+
   final _loginBack = LoginBack();
 
   @override
@@ -98,6 +115,21 @@ class _LoginState extends State<Login> {
                   const SizedBox(
                     height: 16,
                   ),
+                  TextButton(
+                    onPressed: (){
+                      _loginBack.launchEmail(showModalError);
+                    },
+                    child: const Text(
+                      'Esqueci a senha',
+                      style:  TextStyle(
+                        color: Colors.black,
+                        fontSize: 15
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
                   Observer(
                     builder: (_) {
                       return SizedBox(
@@ -122,6 +154,21 @@ class _LoginState extends State<Login> {
                         ),
                       );
                     },
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  TextButton(
+                    onPressed: (){
+                        _loginBack.goToNew(context, 0);
+                    },
+                    child: const Text(
+                      'Novo cadastro',
+                      style:  TextStyle(
+                        color: Colors.black,
+                        fontSize: 15
+                      ),
+                    ),
                   ),
                 ],
               ),

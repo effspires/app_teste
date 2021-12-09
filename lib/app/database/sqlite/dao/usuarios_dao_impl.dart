@@ -65,4 +65,22 @@ class UsuarioDAOImpl implements UsuariosDAO{
     return lista;
   }
 
+  @override
+  Future<List<Usuario>> findPass(email) async {
+    _db = await Connection.get();
+
+    var sql ="SELECT * FROM usuarios WHERE email = '$email'";
+    List<Map<String, dynamic>> resultado = await _db!.rawQuery(sql);
+
+    //conversão Map para usuario
+    List<Usuario> lista = List.generate(resultado.length, (i) {
+      var linha = resultado[i];
+      return Usuario (
+          senha: linha['senha'],
+      );
+    });
+
+    return lista;
+  }
+
 }

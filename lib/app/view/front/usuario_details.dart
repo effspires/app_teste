@@ -40,6 +40,7 @@ class UsuarioDetails extends StatelessWidget {
               CircleAvatar(
                 backgroundImage: NetworkImage(usuario.avatar.toString()),
                 radius: radius,
+                backgroundColor: const Color(0xFF237e84)
               ) :
               CircleAvatar(
                 child: Icon(
@@ -47,6 +48,7 @@ class UsuarioDetails extends StatelessWidget {
                   size: width/2,
                 ),
                 radius: radius,
+                backgroundColor: const Color(0xFF237e84)
               ),
               Center(
                 child: Text(
@@ -67,14 +69,14 @@ class UsuarioDetails extends StatelessWidget {
                             _back.launchSMS(showModalError);
                           },
                           icon: const Icon(Icons.message),
-                          color: Colors.blue,
+                          color: const Color(0xFF237e84),
                         ),
                         IconButton(
                           onPressed: (){
                             _back.launchPhone(showModalError);
                           },
                           icon: const Icon(Icons.phone),
-                          color: Colors.blue,
+                          color: const Color(0xFF237e84),
                         ),
                       ],
                     ),
@@ -94,6 +96,7 @@ class UsuarioDetails extends StatelessWidget {
           ),
           floatingActionButton: FloatingActionButton(
             child: const Icon(Icons.arrow_back),
+            backgroundColor: const Color(0xFF237e84),
             onPressed: (){
               _back.goToBack();
             },

@@ -27,6 +27,10 @@ class UsuarioService{
     return _dao.findUser(email, senha);
   }
 
+  findPass(String? email) {
+    return _dao.findPass(email);
+  }
+
   validateName(String? name) {
     var min = 3;
     var max = 50;

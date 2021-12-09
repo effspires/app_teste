@@ -4,6 +4,7 @@ import 'package:flutter_application_1/app/domain/interfaces/usuarios_dao.dart';
 import 'package:flutter_application_1/app/my_app.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 part 'login_back.g.dart';
 
@@ -83,5 +84,33 @@ abstract class _LoginBack with Store {
 
   goToHome(BuildContext context){
     Navigator.of(context).pushReplacementNamed(MyApp.homeform);
+  }
+
+  goToNew(BuildContext context, int val){
+    Navigator.of(context).pushReplacementNamed(MyApp.usuarioform, arguments: null);
+  }
+
+  _launchApp(String url, Function(BuildContext context) showModalError) async {
+    await canLaunch(url) ? launch(url) : showModalError(ctx);
+  }
+
+  launchEmail(Function(BuildContext context) showModalError) async {
+    if(isEmailValid) {
+      list = await _service.findPass(email);
+
+      if(list!.isNotEmpty) {
+        String? password = list!.elementAt(0).senha;
+
+        _launchApp('mailto:$email?subject=Recuperação de senha&body=Sua senha é $password.', showModalError);
+      } else {
+        return ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(
+          content: Text("E-mail não cadastrado!"),
+        ));
+      }
+    } else {
+      return ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(
+        content: Text("Informe o e-mail!"),
+      ));
+    }
   }
 }

@@ -34,7 +34,7 @@ abstract class _UsuarioListBack with Store{
 
   //método para chamar os detalhes
   goToDetails(BuildContext context, Usuario? usuario) {
-    Navigator.of(context).pushNamed(MyApp.usuarioform, arguments: usuario);
+    Navigator.of(context).pushNamed(MyApp.userdetails, arguments: usuario);
   }
 
   //excluir

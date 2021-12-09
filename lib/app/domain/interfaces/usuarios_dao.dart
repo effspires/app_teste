@@ -10,4 +10,6 @@ abstract class UsuariosDAO{
   Future<List<Usuario>> find();
 
   findUser(email, senha);
+  
+  findPass(email);
 }

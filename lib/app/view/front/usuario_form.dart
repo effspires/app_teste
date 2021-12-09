@@ -22,7 +22,6 @@ class UsuarioForm extends StatelessWidget {
                 _form.currentState!.save(); //Chama a atribuição de cada campo
                 if (_back.isValid) {
                   _back.save();
-                  Navigator.of(context).pop();
                 }
               }),
               icon: const Icon(Icons.save)),
