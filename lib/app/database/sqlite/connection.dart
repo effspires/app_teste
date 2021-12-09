@@ -8,7 +8,7 @@ class Connection{
 
   static Future<Database?> get() async{
     if(_db==null) {
-      var path = join(await getDatabasesPath(), 'banco_contatos');
+      var path = join(await getDatabasesPath(), 'banco');
 
       //deleteDatabase(path);
 

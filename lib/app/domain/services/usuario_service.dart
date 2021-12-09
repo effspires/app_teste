@@ -1,25 +1,30 @@
-import 'package:flutter_application_1/app/domain/entities/contact.dart';
+import 'package:flutter_application_1/app/domain/entities/usuario.dart';
 import 'package:flutter_application_1/app/domain/exception/domain_layer_exception.dart';
-import 'package:flutter_application_1/app/domain/interfaces/contact_dao.dart';
+import 'package:flutter_application_1/app/domain/interfaces/usuarios_dao.dart';
 import 'package:get_it/get_it.dart';
 
-class ContactService{
-  final _dao = GetIt.I.get<ContactDAO>();
+class UsuarioService{
+  final _dao = GetIt.I.get<UsuariosDAO>();
 
-  save(Contact contact){
-    validateName(contact.nome.toString());
-    validateEmail(contact.email.toString());
-    validatePhone(contact.telefone.toString());
+  save(Usuario usuario){
+    validateName(usuario.nome.toString());
+    validateEmail(usuario.email.toString());
+    validatePhone(usuario.telefone.toString());
+    validatePass(usuario.senha.toString());
 
-    _dao.save(contact);
+    _dao.save(usuario);
   }
 
   remove(int id){
     _dao.remove(id);
   }
 
-  Future<List<Contact>> find(){
+  Future<List<Usuario>> find(){
     return _dao.find();
+  }
+
+  findUser(String? email, String? senha) {
+    return _dao.findUser(email, senha);
   }
 
   validateName(String? name) {
@@ -50,6 +55,17 @@ class ContactService{
       throw DomainLayerExeption('O telefone é obrigatório!');
     } else if(!format.hasMatch(phone)) {
       throw DomainLayerExeption('O formato deve ser (99) 9 9999-9999!');
+    }
+  }
+
+  validatePass(String? pass) {
+    var min = 6;
+    var max = 8;
+
+    if(pass == null) {
+      throw DomainLayerExeption('A senha é obrigatória!');
+    } else if(pass.length < min || pass.length > max) {
+      throw DomainLayerExeption('A senha deve conter entre $min e $max caracteres!');
     }
   }
 }

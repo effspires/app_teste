@@ -1,15 +1,17 @@
-class Contact{
+class Usuario{
   int? id;
   String? nome;
   String? telefone;
   String? email;
-  String? urlAvatar;
+  String? senha;
+  String? avatar;
 
-  Contact({
+  Usuario({
     this.id, 
     this.nome, 
     this.telefone, 
     this.email, 
-    this.urlAvatar
+    this.senha,
+    this.avatar
   });
 }

@@ -1,29 +1,30 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_application_1/app/domain/entities/contact.dart';
-import 'package:flutter_application_1/app/domain/services/contact_service.dart';
+import 'package:flutter_application_1/app/domain/entities/usuario.dart';
+import 'package:flutter_application_1/app/domain/services/usuario_service.dart';
 import 'package:get_it/get_it.dart';
 
-class ContactFormBack {
+class UsuarioFormBack {
   
-  Contact? contact;
-  final _service = GetIt.I.get<ContactService>();
+  Usuario? usuario;
+  final _service = GetIt.I.get<UsuarioService>();
 
   bool? _nameIsValid;
   bool? _emailIsValid;
   bool? _phoneIsValid;
+  bool? _passIsValid;
 
   //@action
-  bool get isValid => _nameIsValid! && _emailIsValid! && _phoneIsValid!;
+  bool get isValid => _nameIsValid! && _emailIsValid! && _phoneIsValid! && _passIsValid!;
 
   //Diferenciar novo com alteração
-  ContactFormBack(BuildContext context){
+  UsuarioFormBack(BuildContext context){
     var parameter = ModalRoute.of(context)!.settings.arguments;
-    contact = ((parameter == null) ? Contact() : parameter) as Contact?;
+    usuario = ((parameter == null) ? Usuario() : parameter) as Usuario?;
   }
 
   //Salvar
   save() async {
-    await _service.save(contact!);
+    await _service.save(usuario!);
   }
 
   //Validações
@@ -56,6 +57,17 @@ class ContactFormBack {
       return null;
     } catch (e) {
       _phoneIsValid = false;
+      return e.toString();
+    }
+  }
+
+  String? validateSenha(pass){
+    try {
+      _service.validatePass(pass);
+      _passIsValid = true;
+      return null;
+    } catch (e) {
+      _passIsValid = false;
       return e.toString();
     }
   }

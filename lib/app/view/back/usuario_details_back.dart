@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_application_1/app/domain/entities/contact.dart';
+import 'package:flutter_application_1/app/domain/entities/usuario.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ContactDetailsBack {
+class UsuarioDetailsBack {
   
   BuildContext context;
-  Contact? contact;
+  Usuario? usuario;
 
-  ContactDetailsBack(this.context){
-    contact = ModalRoute.of(context)!.settings.arguments as Contact?;
+  UsuarioDetailsBack(this.context){
+    usuario = ModalRoute.of(context)!.settings.arguments as Usuario?;
   }
 
   goToBack(){
@@ -20,14 +20,14 @@ class ContactDetailsBack {
   }
 
   launchPhone(Function(BuildContext context) showModalError){
-    _launchApp('tel:${contact!.telefone}', showModalError);
+    _launchApp('tel:${usuario!.telefone}', showModalError);
   }
 
   launchSMS(Function(BuildContext context) showModalError){
-    _launchApp('sms:${contact!.telefone}', showModalError);
+    _launchApp('sms:${usuario!.telefone}', showModalError);
   }
 
   launchEmail(Function(BuildContext context) showModalError){
-    _launchApp('mailto:${contact!.email}', showModalError);
+    _launchApp('mailto:${usuario!.email}', showModalError);
   }
 }
